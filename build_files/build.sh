@@ -2,23 +2,30 @@
 
 set -ouex pipefail
 
-### Install packages
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+tee /etc/yum.repos.d/ghostty.repo <<'EOF'
+[copr:copr.fedorainfracloud.org:pgdev:ghostty]
+name=Copr repo for Ghostty owned by pgdev
+baseurl=https://download.copr.fedorainfracloud.org/results/pgdev/ghostty/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/pgdev/ghostty/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
+EOF
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+tee /etc/yum.repos.d/nordvpn.repo <<'EOF'
+[nordvpn]
+name=nordvpn
+enabled=1
+gpgcheck=0
+baseurl=https://repo.nordvpn.com/yum/nordvpn/centos/x86_64
+EOF
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+dnf remove -y ptyxis tailscale solaar gnome-shell-extension-search-light gnome-shell-extension-tailscale-gnome-qs ncurses-term
 
-#### Example for enabling a System Unit File
+dnf5 install -y tmux ghostty bridge-utils xhost nordvpn gtk2-devel
 
 systemctl enable podman.socket
