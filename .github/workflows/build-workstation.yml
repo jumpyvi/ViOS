@@ -1,5 +1,5 @@
 ---
-name: Build Custom Image
+name: Build Workstation Edition Image
 on:
   pull_request:
     branches:

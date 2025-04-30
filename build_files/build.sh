@@ -2,30 +2,45 @@
 
 set -ouex pipefail
 
+edition="$1"
 
-tee /etc/yum.repos.d/ghostty.repo <<'EOF'
-[copr:copr.fedorainfracloud.org:pgdev:ghostty]
-name=Copr repo for Ghostty owned by pgdev
-baseurl=https://download.copr.fedorainfracloud.org/results/pgdev/ghostty/fedora-$releasever-$basearch/
-type=rpm-md
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://download.copr.fedorainfracloud.org/results/pgdev/ghostty/pubkey.gpg
-repo_gpgcheck=0
-enabled=1
-enabled_metadata=1
-EOF
+# Thank you (copied from) m2Giles https://github.com/m2Giles/m2os
+function echo_group() {
+    local WHAT
+    WHAT="$(
+        basename "$1" .sh |
+            tr "-" " " |
+            tr "_" " "
+    )"
+    echo "::group:: === ${WHAT^^} ==="
+    "$1"
+    echo "::endgroup::"
+}
 
-tee /etc/yum.repos.d/nordvpn.repo <<'EOF'
-[nordvpn]
-name=nordvpn
-enabled=1
-gpgcheck=0
-baseurl=https://repo.nordvpn.com/yum/nordvpn/centos/x86_64
-EOF
+if [[ "$edition" == "workstation" ]]; then
+    cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
+    cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
+    cp /ctx/packages/repos/vscode.repo /etc/yum.repos.d/vscode.repo
+    cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
+    echo_group /ctx/packages/utils.sh
+    echo_group /ctx/packages/containers.sh
+    echo_group /ctx/packages/gnome-extensions.sh
+    echo_group /ctx/packages/virt.sh
+    dnf5 install -y ghostty nordvpn code
+    dnf remove -y ptyxis
 
-dnf remove -y ptyxis tailscale solaar gnome-shell-extension-search-light gnome-shell-extension-tailscale-gnome-qs ncurses-term
+elif [[ "$edition" == "gaming" ]]; then
+    cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
+    cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
+    echo_group /ctx/packages/utils.sh
+    echo_group /ctx/packages/containers.sh
+    echo_group /ctx/packages/cockpit.sh
+    dnf5 install -y nordvpn
+    dnf remove -y ptyxis
 
-dnf5 install -y tmux ghostty bridge-utils xhost nordvpn gtk2-devel
+else
+    echo "Invalid edition specified. Please use 'workstation' or 'gaming'."
+    exit 1
+fi
 
-systemctl enable podman.socket
+
