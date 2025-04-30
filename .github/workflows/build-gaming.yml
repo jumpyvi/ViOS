@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - main
+      - create-gaming-edition
     paths-ignore:
       - '**/README.md'
   workflow_dispatch:
