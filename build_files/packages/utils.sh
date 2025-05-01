@@ -11,6 +11,7 @@ dnf5 install -y --skip-unavailable \
     dbus-x11 \
     ydotool \
     bootc \
+    rclone \
     p7zip-plugins \
     p7zip \
     gtk2-devel
