@@ -26,6 +26,7 @@ if [[ "$edition" == "workstation" ]]; then
     echo_group /ctx/packages/containers.sh
     echo_group /ctx/packages/gnome-extensions.sh
     echo_group /ctx/packages/virt.sh
+    echo_group /ctx/branding/branding-ublue.sh
     dnf5 install -y ghostty nordvpn code
     dnf remove -y ptyxis
 
