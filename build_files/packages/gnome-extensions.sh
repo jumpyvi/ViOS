@@ -7,4 +7,5 @@ dnf5 install -y --skip-broken \
     gnome-shell-extension-appindicator \
     gnome-shell-extension-caffeine \
     gnome-shell-extension-dash-to-dock \
-    gnome-tweaks
+    gnome-tweaks \
+    nautilus-python

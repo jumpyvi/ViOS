@@ -14,7 +14,8 @@ dnf5 install -y --skip-unavailable \
     rclone \
     p7zip-plugins \
     p7zip \
-    gtk2-devel
+    gtk2-devel \
+    ublue-brew
 
 dnf5 remove -y \
     firefox-langpacks \
