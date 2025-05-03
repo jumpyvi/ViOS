@@ -38,6 +38,7 @@ elif [[ "$edition" == "gaming" ]]; then
     echo_group /ctx/packages/cockpit.sh
     dnf5 install -y nordvpn
     dnf remove -y ptyxis
+    nvidia-ctk runtime configure --runtime=docker
 
 else
     echo "Invalid edition specified. Please use 'workstation' or 'gaming'."
