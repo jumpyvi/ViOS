@@ -10,6 +10,7 @@ dnf5 install -y --skip-unavailable \
     android-tools \
     dbus-x11 \
     ydotool \
+    openssh-askpass \
     bootc \
     rclone \
     p7zip-plugins \
