@@ -21,10 +21,9 @@ if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
     cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
     echo_group /ctx/branding/branding-ublue.sh
-    dnf5 remove ncurses-term -y
-    dnf5 install -y ghostty nordvpn code
-    dnf remove -y ptyxis
+    dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
+    dnf5 install -y ghostty nautilus-python nordvpn code
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
