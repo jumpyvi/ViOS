@@ -24,6 +24,7 @@ if [[ "$edition" == "workstation" ]]; then
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
     dnf5 install -y ghostty nautilus-python nordvpn code
+    mkdir /nix
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
