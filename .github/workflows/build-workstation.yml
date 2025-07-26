@@ -4,13 +4,13 @@ on:
   pull_request:
     branches:
       - main
-      - create-gaming-edition
+      - alpha
   schedule:
     - cron: '05 10 * * *'  # 10:05am UTC everyday
   push:
     branches:
       - main
-      - create-gaming-edition
+      - alpha
     paths-ignore:
       - '**/README.md'
   workflow_dispatch:
@@ -69,6 +69,7 @@ jobs:
             type=raw,value={{date 'YYYYMMDD'}}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
+            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/alpha' }}
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
