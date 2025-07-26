@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-dnf5 install -y --skip-unavailable \
+for pkg in \
     containerd.io \
     docker-buildx-plugin \
     docker-ce \
@@ -11,5 +11,14 @@ dnf5 install -y --skip-unavailable \
     podman-bootc \
     podman-compose \
     podman-machine
+do
+    if dnf list --available "$pkg" &>/dev/null; then
+        echo "Installing $pkg..."
+        dnf install -y "$pkg"
+    else
+        echo "Package $pkg not available. Skipping."
+    fi
+done
+
 
 systemctl enable docker

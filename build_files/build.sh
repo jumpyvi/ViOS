@@ -33,8 +33,14 @@ elif [[ "$edition" == "gaming" ]]; then
     dnf5 install -y nordvpn
     dnf remove -y ptyxis
 
+elif [[ "$edition" == "server" ]]; then
+    cp /ctx/packages/repos/docker-rhel.repo /etc/yum.repos.d/docker.repo
+    echo_group /ctx/packages/containers.sh
+    echo_group /ctx/packages/cockpit.sh
+    dnf install -y vim tailscale
+
 else
-    echo "Invalid edition specified. Please use 'workstation' or 'gaming'."
+    echo "Invalid edition specified. Please use 'workstation', 'gaming' or "server"."
     exit 1
 fi
 

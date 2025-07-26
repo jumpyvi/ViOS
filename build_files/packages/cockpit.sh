@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-dnf5 install -y --skip-unavailable \
+dnf install -y \
     cockpit-bridge \
     cockpit-machines \
     cockpit-networkmanager \
