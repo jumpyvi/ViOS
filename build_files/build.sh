@@ -20,6 +20,9 @@ function echo_group() {
 if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
     cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
+    cp /ctx/packages/repos/cachykernel.repo /etc/yum.repos.d/cachykernel.repo
+    rpm -qa | grep '^kernel' | grep -v cachyos | xargs rpm -e --nodeps
+    dnf install kernel-cachyos-lts kernel-cachyos-lts-devel-matched -y
     echo_group /ctx/branding/branding-ublue.sh
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
