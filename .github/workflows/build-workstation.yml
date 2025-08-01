@@ -61,15 +61,15 @@ jobs:
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
         id: metadata
         with:
-          # Branch-specific tags: latest for main, alpha for alpha branch
+          # This generates all the tags for your image, you can add custom tags here too!
+          # By default, it should generate "latest" and "latest.(date here)".
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=latest.{{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=raw,value={{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/alpha' }}
-            type=raw,value=alpha.{{date 'YYYYMMDD'}},enable=${{ github.ref == 'refs/heads/alpha' }}
+            type=raw,value=latest
+            type=raw,value=latest.{{date 'YYYYMMDD'}}
+            type=raw,value={{date 'YYYYMMDD'}}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
+            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/alpha' }}
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
@@ -79,12 +79,12 @@ jobs:
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
-            org.opencontainers.image.version=${{ github.ref == 'refs/heads/alpha' && 'alpha' || 'latest' }}
+            org.opencontainers.image.version=latest
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=bootc,ublue,universal-blue
             io.artifacthub.package.license=Apache-2.0
             io.artifacthub.package.logo-url=${{ env.ARTIFACTHUB_LOGO_URL }}
-            io.artifacthub.package.prerelease=${{ github.ref == 'refs/heads/alpha' }}
+            io.artifacthub.package.prerelease=false
             containers.bootc=1
           sep-tags: " "
           sep-annotations: " "
