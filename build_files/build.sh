@@ -10,10 +10,10 @@ if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
     cp /ctx/packages/repos/cachykernel.repo /etc/yum.repos.d/cachykernel.repo
     /ctx/packages/cachy-kernel.sh
-    /ctx/branding/branding-ublue.sh
+    /ctx/branding/branding.sh
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
-    dnf5 install -y ghostty nautilus-python code
+    dnf5 install -y ghostty nautilus-python
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo

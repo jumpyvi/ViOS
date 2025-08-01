@@ -3,12 +3,12 @@ name: Build Workstation Edition Image
 on:
   pull_request:
     branches:
-      - "*"
+       - main
   schedule:
     - cron: '0 10 */3 * *'  # 10:00am UTC every 3 days
   push:
     branches:
-      - "*"
+       - main
     paths-ignore:
       - '**/README.md'
   workflow_dispatch:
@@ -99,7 +99,7 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
           build-args: |
-            BASE_IMAGE=ghcr.io/ublue-os/bluefin-dx:stable
+            BASE_IMAGE=$(grep '^WORKSTATION_IMAGE=' images.conf | cut -d'=' -f2-)
             TYPE=workstation
 
       # These `if` statements are so that pull requests for your custom images do not make it publish any packages under your name without you knowing
@@ -136,7 +136,7 @@ jobs:
         with:
           registry: ${{ steps.registry_case.outputs.lowercase }}
           image: ${{ steps.image_case.outputs.lowercase }}
-          tags: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && steps.metadata.outputs.tags || format('{0}:{1}', steps.image_case.outputs.lowercase, 'dev') }}
+          tags: ${{ steps.metadata.outputs.tags }}
           username: ${{ env.REGISTRY_USER }}
           password: ${{ env.REGISTRY_PASSWORD }}
 
