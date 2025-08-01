@@ -3,14 +3,12 @@ name: Build Gaming Edition Image
 on:
   pull_request:
     branches:
-      - main
-      - create-gaming-edition
+       - main
   schedule:
-    - cron: '05 10 * * *'  # 10:05am UTC everyday
+    - cron: '0 10 */3 * *'  # 10:00am UTC every 3 days
   push:
     branches:
-      - main
-      - create-gaming-edition
+       - main
     paths-ignore:
       - '**/README.md'
   workflow_dispatch:
@@ -88,18 +86,28 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
 
+      - name: Get image from images.conf
+        id: get_base_image
+        run: |
+          value=$(grep '^GAMING_IMAGE=' ./images.conf | cut -d'=' -f2-)
+          echo "WORKSTATION_IMAGE is: $value"
+          echo "BASE_IMAGE=$value" >> $GITHUB_OUTPUT
+
       - name: Build Image
         id: build_image
         uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         with:
           containerfiles: |
-            ./gaming.containerfile
+            ./Containerfile
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
+          build-args: |
+            BASE_IMAGE=${{ steps.get_base_image.outputs.BASE_IMAGE }}
+            TYPE=gaming
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.
@@ -168,7 +176,7 @@ jobs:
       # using Cosign and save the private key as a repository secret in Github for this workflow
       # to consume. For more details, review the image signing section of the README.
       - name: Install Cosign
-        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3.9.1
+        uses: sigstore/cosign-installer@d58896d6a1865668819e1d91763c7751a165e159 # v3.9.2
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
 
       - name: Sign container image
