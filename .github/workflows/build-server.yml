@@ -99,8 +99,8 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
           build-args: |
-            BASE_IMAGE="ghcr.io/ublue-os/cayo:centos"
-            TYPE="server"
+            BASE_IMAGE=ghcr.io/ublue-os/cayo:centos
+            TYPE=server
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.
