@@ -4,6 +4,8 @@ set -ouex pipefail
 
 edition="$1"
 
+echo "edition is $edition"
+
 if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
     cp /ctx/packages/repos/cachykernel.repo /etc/yum.repos.d/cachykernel.repo
@@ -11,13 +13,12 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding-ublue.sh
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
-    dnf5 install -y ghostty nautilus-python nordvpn code
+    dnf5 install -y ghostty nautilus-python code
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
     /ctx/packages/containers.sh
     /ctx/packages/cockpit.sh
-    dnf5 install -y nordvpn
     dnf remove -y ptyxis
 
 elif [[ "$edition" == "server" ]]; then
