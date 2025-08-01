@@ -21,8 +21,8 @@ if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
     cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
     cp /ctx/packages/repos/cachykernel.repo /etc/yum.repos.d/cachykernel.repo
-    echo_group /ctx/packages/cachy-kernel.sh
-    echo_group /ctx/branding/branding-ublue.sh
+    /ctx/packages/cachy-kernel.sh
+    /ctx/branding/branding-ublue.sh
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
     dnf5 install -y ghostty nautilus-python nordvpn code

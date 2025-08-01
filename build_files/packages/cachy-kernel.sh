@@ -3,7 +3,7 @@ set -eoux pipefail
 
 dnf5 copr enable -y bieszczaders/kernel-cachyos
 
-# Remove usless kernels
+# Remove useless kernels
 readarray -t OLD_KERNELS < <(rpm -qa 'kernel-*')
 if (( ${#OLD_KERNELS[@]} )); then
     rpm -e --justdb --nodeps "${OLD_KERNELS[@]}"
@@ -25,14 +25,6 @@ dnf5 install -y \
 # Get full kernel version with arch (including the arch)
 KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-cachyos-lts)"
 
-
-# Build initramfs (without --add-drivers I get an error telling me subvols= does not exists)
-export DRACUT_NO_XATTR=1
-dracut --force \
-  --kver "${KERNEL_VERSION}" \
-  --add-drivers "btrfs nvme xfs ext4" \
-  "/usr/lib/modules/${KERNEL_VERSION}/initramfs.img"
-
 # Copy vmlinuz
 VMLINUZ_SOURCE="/usr/lib/kernel/vmlinuz-${KERNEL_VERSION}"
 VMLINUZ_TARGET="/usr/lib/modules/${KERNEL_VERSION}/vmlinuz"
@@ -43,3 +35,16 @@ fi
 # Lock kernel packages
 dnf5 versionlock add "kernel-cachyos-lts-${KERNEL_VERSION}" || true
 dnf5 versionlock add "kernel-cachyos-lts-modules-${KERNEL_VERSION}" || true
+
+
+# Thank you @renner for this part
+# Build initramfs (without --add-drivers I get an error telling me subvols= does not exists)
+export DRACUT_NO_XATTR=1
+dracut --force \
+  --no-hostonly \
+  --kver "${KERNEL_VERSION}" \
+  --add-drivers "btrfs nvme xfs ext4" \
+  --reproducible -v --add ostree \
+  -f "/usr/lib/modules/${KERNEL_VERSION}/initramfs.img"
+
+chmod 0600 "/lib/modules/${KERNEL_VERSION}/initramfs.img"
