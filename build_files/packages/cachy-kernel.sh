@@ -1,6 +1,21 @@
 #!/usr/bin/bash
 set -eoux pipefail
 
+
+# Adds the addons repo
+dnf5 copr enable -y bieszczaders/kernel-cachyos-addons
+
+# Adds required package for the scheduler
+dnf5 install -y \
+    --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos-addons" \
+    --allowerasing \
+    libcap-ng libcap-ng-devel procps-ng procps-ng-devel uksmd libbpf scx-scheds
+
+
+systemctl enable scx.service
+
+
+# Adds the main kernel repo
 dnf5 copr enable -y bieszczaders/kernel-cachyos
 
 # Remove useless kernels
