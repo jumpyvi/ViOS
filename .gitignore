@@ -2,4 +2,3 @@ cosign.key
 _build_*
 output
 _build-*/**
-build_files/packages/nordvpn.sh

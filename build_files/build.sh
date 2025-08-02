@@ -19,19 +19,16 @@ function echo_group() {
 
 if [[ "$edition" == "workstation" ]]; then
     cp /ctx/packages/repos/ghostty.repo /etc/yum.repos.d/ghostty.repo
-    cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
     echo_group /ctx/branding/branding.sh
     /ctx/packages/cachy-kernel.sh
     dnf5 remove ptyxis ncurses-term -y
     dnf remove -y 'gnome-shell-extension*'
-    dnf5 install -y ghostty nautilus-python nordvpn code
+    dnf5 install -y ghostty nautilus-python code
 
 elif [[ "$edition" == "gaming" ]]; then
-    cp /ctx/packages/repos/nordvpn.repo /etc/yum.repos.d/nordvpn.repo
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
     echo_group /ctx/packages/containers.sh
     echo_group /ctx/packages/cockpit.sh
-    dnf5 install -y nordvpn
     dnf remove -y ptyxis
 
 elif [[ "$edition" == "server" ]]; then
