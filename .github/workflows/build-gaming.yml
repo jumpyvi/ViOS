@@ -90,7 +90,7 @@ jobs:
         id: get_base_image
         run: |
           value=$(grep '^GAMING_IMAGE=' ./images.conf | cut -d'=' -f2-)
-          echo "WORKSTATION_IMAGE is: $value"
+          echo "BASE IMAGE is: $value"
           echo "BASE_IMAGE=$value" >> $GITHUB_OUTPUT
 
       - name: Build Image

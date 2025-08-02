@@ -14,8 +14,8 @@ Now that flatpak and brew (and soon sysext) are really good, the changes in thes
 ### Changes:
 - Ptyxis replaced by Ghostty
 - All system-wide gnome extensions removed
-- Branding set to UBlue/BootC instead of Bluefin
-- NordVPN added (will be removed soon)
+- Branding set to UBlue/BootC instead of Bluefin (GDM logo by furtivetardigrade and the Bluefin community)
+- Use the LTS cachyOS kernel
 
 ## Gaming
 > ghcr.io/jumpyvi/vios-gaming
