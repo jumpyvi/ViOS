@@ -89,7 +89,7 @@ jobs:
       - name: Get image from images.conf
         id: get_base_image
         run: |
-          value=$(grep '^WORKSTATION_IMAGE=' ./images.conf | cut -d'=' -f2-)
+          value=$(grep '^SERVER_IMAGE=' ./images.conf | cut -d'=' -f2-)
           echo "BASE IMAGE is: $value"
           echo "BASE_IMAGE=$value" >> $GITHUB_OUTPUT
 
