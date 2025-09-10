@@ -5,6 +5,7 @@ set -ouex pipefail
 extra=(
   "ghostty"
   "nautilus-python"
+  "yaru-theme"
 )
 
 removals=(
