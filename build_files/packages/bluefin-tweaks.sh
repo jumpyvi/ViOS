@@ -6,6 +6,7 @@ extra=(
   "ghostty"
   "nautilus-python"
   "yaru-theme"
+  "nm-connection-editor"
 )
 
 removals=(
