@@ -15,6 +15,7 @@ elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
     /ctx/packages/containers.sh
     /ctx/packages/cockpit.sh
+    /ctx/packages/virt.sh
     dnf remove -y ptyxis
 
 elif [[ "$edition" == "server" ]]; then
