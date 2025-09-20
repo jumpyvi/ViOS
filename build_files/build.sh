@@ -9,7 +9,7 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding.sh
     /ctx/packages/cachy-kernel.sh
     /ctx/packages/bluefin-tweaks.sh
-    dnf5 install -y gcc gcc-c++
+    dnf5 install -y /ctx/packages/XPPenLinux407.rpm # Convert to sysext in the futur
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
