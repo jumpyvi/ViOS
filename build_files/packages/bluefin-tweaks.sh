@@ -17,6 +17,7 @@ removals=(
   "bluefin-fastfetch"
   "bluefin-faces"
   "fastfetch"
+  "code"
 )
 
 dnf remove -y 'gnome-shell-extension*'
