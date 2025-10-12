@@ -7,6 +7,7 @@ extra=(
   "nautilus-python"
   "yaru-theme"
   "nm-connection-editor"
+  "evolution-ews-core"
 )
 
 removals=(
