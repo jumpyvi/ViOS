@@ -10,6 +10,8 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/packages/cachy-kernel.sh
     dnf5 install -y /ctx/packages/XPPenLinux407.rpm # Convert to sysext in the futur
     dnf5 install -y rofi rofimoji
+    dnf5 install -y --enablerepo=terra ghostty
+    dnf5 remove -y ptyxis
 
 elif [[ "$edition" == "gaming" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
