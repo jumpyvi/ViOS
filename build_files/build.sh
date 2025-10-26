@@ -9,7 +9,7 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding.sh
     /ctx/packages/cachy-kernel.sh
     dnf5 install -y /ctx/packages/XPPenLinux407.rpm # Convert to sysext in the futur
-    dnf5 install -y rofi rofimoji
+    dnf5 install -y ulauncher
     dnf5 install -y --enablerepo=terra ghostty
     dnf5 remove -y ptyxis
 
