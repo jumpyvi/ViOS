@@ -12,21 +12,20 @@ Now that flatpak and brew (and soon sysext) are really good, the changes in thes
 ☁️ Based on Bluefin-DX
 
 ### Changes:
+- Gnome swapped out for Cinnamon
 - Ptyxis replaced by Ghostty
-- All system-wide gnome extensions removed
 - Branding set to UBlue/BootC instead of Bluefin (GDM logo by furtivetardigrade and the Bluefin community)
-- Use the LTS cachyOS kernel
+- Uses the LTS cachyOS kernel
 
 ## Gaming
 > ghcr.io/jumpyvi/vios-gaming
 
-☁️ Based on Bazzite
+☁️ Based on Bazzite (KDE Nvidia)
 
 ### Changes
 - Ptyxis removed
 - Docker added
-
-All other changes will be reverted soon
+- Virtualization support
 
 
 ## Server
