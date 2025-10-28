@@ -10,6 +10,7 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/packages/cachy-kernel.sh
     dnf5 install -y /ctx/packages/XPPenLinux407.rpm # Convert to sysext in the futur
     dnf5 install -y ulauncher evolution evolution-ews
+    dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
     dnf5 install -y --enablerepo=terra ghostty
     dnf5 remove -y ptyxis
 
