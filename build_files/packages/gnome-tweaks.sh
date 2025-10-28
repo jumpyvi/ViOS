@@ -19,6 +19,7 @@ removals=(
   "fastfetch"
 )
 
+dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 dnf remove -y 'gnome-shell-extension*'
 dnf5 remove -y ${removals[@]}
 
