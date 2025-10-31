@@ -8,8 +8,9 @@ edition="$1"
 if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding.sh
     /ctx/packages/cachy-kernel.sh
-    dnf5 install -y /ctx/packages/XPPenLinux407.rpm # Convert to sysext in the futur
+    dnf5 install -y /ctx/packages/XPPenLinux407.rpm
     dnf5 install -y ulauncher evolution evolution-ews
+    dnf5 install -y $(curl -s https://api.github.com/repos/zquestz/plank-reloaded/releases/latest | grep browser_download_url | grep '\.rpm"' | grep -vE 'debug|devel' | cut -d '"' -f 4)
     dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
     dnf5 install -y --enablerepo=terra ghostty
     dnf5 remove -y ptyxis
