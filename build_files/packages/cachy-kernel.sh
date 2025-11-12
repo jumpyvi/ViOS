@@ -9,7 +9,7 @@ dnf5 copr enable -y bieszczaders/kernel-cachyos-addons
 dnf5 install -y \
     --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos-addons" \
     --allowerasing \
-    libcap-ng libcap-ng-devel procps-ng procps-ng-devel uksmd libbpf scx-scheds
+    libcap-ng libcap-ng-devel procps-ng procps-ng-devel uksmd libbpf scx-scheds scx-tools scx-manager cachyos-settings
 
 
 # systemctl enable scx_loader.service
