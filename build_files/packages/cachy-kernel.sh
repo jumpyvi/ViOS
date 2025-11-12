@@ -12,7 +12,7 @@ dnf5 install -y \
     libcap-ng libcap-ng-devel procps-ng procps-ng-devel uksmd libbpf scx-scheds
 
 
-systemctl enable scx_loader.service
+# systemctl enable scx_loader.service
 
 tee /etc/scx_loader.toml > /dev/null <<EOF
 default_sched = "scx_bpfland" # Possible values : "scx_bpfland", "scx_flash", "scx_lavd", "scx_p2dq", "scx_tickless", "scx_rustland", "scx_rusty"
