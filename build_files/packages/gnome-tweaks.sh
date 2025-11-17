@@ -8,15 +8,17 @@ extra=(
   "yaru-theme"
   "nm-connection-editor"
   "evolution-ews-core"
+  "dconf-editor"
+  "nautilus-open-any-terminal"
 )
 
 removals=(
   "ptyxis"
-  "ramalama"
   "fish"
   "bluefin-fastfetch"
   "bluefin-faces"
   "fastfetch"
+  "ghostty-nautilus"
 )
 
 dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
