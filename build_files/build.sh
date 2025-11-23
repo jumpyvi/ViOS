@@ -7,7 +7,7 @@ edition="$1"
 
 if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding.sh
-    /ctx/packages/cachy-kernel.sh
+    /ctx/packages/kernel.sh
     /ctx/packages/bluefin-tweaks.sh
 
 elif [[ "$edition" == "gaming" ]]; then
