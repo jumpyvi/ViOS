@@ -8,8 +8,9 @@ I try to keep the "atomic philosophy" and only add what can absolutly not be ins
 
 ## Workstation
 > ghcr.io/jumpyvi/vios-workstation
-
 ☁️ Based on Bluefin-DX (stable)
+
+A slight modification to the base image matching my preference and requirements
 
 ### Changes:
 - Ptyxis replaced by Ghostty (+ nautilus plugin)
@@ -18,9 +19,11 @@ I try to keep the "atomic philosophy" and only add what can absolutly not be ins
 - Some branding changes (for fun)
 
 ## Multimedia
-> ghcr.io/jumpyvi/vios-gaming
+> ghcr.io/jumpyvi/vios-mutlimedia
 
 ☁️ Based on Bazzite (KDE Nvidia)
+
+A bazzite modificated image to allow to serve as a multimedia server (including gaming, backups and containerized services)
 
 ### Changes
 - Ptyxis removed
