@@ -1,5 +1,5 @@
 ---
-name: Build Gaming Edition Image
+name: Build Multimedia Edition Image
 on:
   pull_request:
     branches:
@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: "${{ github.event.repository.name }}-gaming"  # the name of the image produced by this build, matches repo names
-  IMAGE_DESC: "The gaming edition of vios"
+  IMAGE_NAME: "${{ github.event.repository.name }}-multimedia"  # the name of the image produced by this build, matches repo names
+  IMAGE_DESC: "The multimedia edition of vios"
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
   ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
 
@@ -89,7 +89,7 @@ jobs:
       - name: Get image from images.conf
         id: get_base_image
         run: |
-          value=$(grep '^GAMING_IMAGE=' ./images.conf | cut -d'=' -f2-)
+          value=$(grep '^MULTIMEDIA_IMAGE=' ./images.conf | cut -d'=' -f2-)
           echo "BASE IMAGE is: $value"
           echo "BASE_IMAGE=$value" >> $GITHUB_OUTPUT
 
@@ -107,7 +107,7 @@ jobs:
           oci: false
           build-args: |
             BASE_IMAGE=${{ steps.get_base_image.outputs.BASE_IMAGE }}
-            TYPE=gaming
+            TYPE=multimedia
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.

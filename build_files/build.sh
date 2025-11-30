@@ -10,21 +10,16 @@ if [[ "$edition" == "workstation" ]]; then
     /ctx/packages/kernel.sh
     /ctx/packages/bluefin-tweaks.sh
 
-elif [[ "$edition" == "gaming" ]]; then
+elif [[ "$edition" == "multimedia" ]]; then
     cp /ctx/packages/repos/docker.repo /etc/yum.repos.d/docker.repo
     /ctx/packages/containers.sh
     /ctx/packages/cockpit.sh
     /ctx/packages/virt.sh
     dnf remove -y ptyxis
-
-elif [[ "$edition" == "server" ]]; then
-    cp /ctx/packages/repos/docker-rhel.repo /etc/yum.repos.d/docker.repo
-    /ctx/packages/containers.sh
-    /ctx/packages/cockpit.sh
-    dnf install -y vim tailscale borgbackup
+    dnf install -y borgbackup
 
 else
-    echo "Invalid edition specified. Please use 'workstation', 'gaming' or "server"."
+    echo "Invalid edition specified. Please use 'workstation' or 'multimedia'."
     exit 1
 fi
 
