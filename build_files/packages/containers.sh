@@ -10,7 +10,8 @@ for pkg in \
     docker-compose-plugin \
     podman-bootc \
     podman-compose \
-    podman-machine
+    podman-machine \
+    lxc lxc-templates lxc-extra debootstrap libvirt perl gpg
 do
     if dnf list --available "$pkg" &>/dev/null; then
         echo "Installing $pkg..."
