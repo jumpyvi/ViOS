@@ -17,27 +17,16 @@ I try to keep the "atomic philosophy" and only add what can absolutly not be ins
 - Evolution added for Gnome-Shell support
 - Some branding changes (for fun)
 
-## Gaming
+## Multimedia
 > ghcr.io/jumpyvi/vios-gaming
 
 ☁️ Based on Bazzite (KDE Nvidia)
 
 ### Changes
 - Ptyxis removed
-- Docker added
+- Docker and LXC added
 - Virtualization support
-
-
-## Server (deprecated until I have some free time)
-> ghcr.io/jumpyvi/vios-server
-
-☁️ Based on cayo:centos
-
-### Changes
-- Docker added
-- Tailscale added
-- Cockpit added
-- Vim added (will be switched to helix when available)
+- Borg support
 
 
 
