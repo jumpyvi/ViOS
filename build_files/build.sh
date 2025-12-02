@@ -16,7 +16,7 @@ elif [[ "$edition" == "multimedia" ]]; then
     /ctx/packages/cockpit.sh
     /ctx/packages/virt.sh
     dnf remove -y ptyxis
-    dnf install -y borgbackup sway
+    dnf install -y borgbackup sway seatd
 
 else
     echo "Invalid edition specified. Please use 'workstation' or 'multimedia'."
