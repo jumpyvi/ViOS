@@ -2,7 +2,6 @@
 
 set -ouex pipefail
 
-# GDM Logo by @furtivetardigrade, @kikaraage, @jf8130, and @chandeleer
 cp /ctx/branding/gdm-logo.png /usr/share/pixmaps/fedora-gdm-logo.png
 cp /ctx/branding/bootc.png /usr/share/plymouth/themes/spinner/watermark.png
 
