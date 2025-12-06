@@ -14,9 +14,9 @@ I try to keep the "atomic philosophy" and only add what can absolutly not be ins
 A slight modification to the base image matching my preference and requirements
 
 ### Changes:
-- Ptyxis replaced by Ghostty (+ nautilus plugin)
 - Default kernel replaced by Kwizart's longterm kernel (6.12 rn)
 - Evolution added for Gnome-Shell support
+- nm-connection-editor added
 - Some branding changes (for fun)
 
 ## Multimedia
