@@ -14,7 +14,7 @@ I try to keep the "atomic philosophy" and only add what can absolutly not be ins
 A slight modification to the base image matching my preference and requirements
 
 ### Changes:
-- Default kernel replaced by Kwizart's longterm kernel (6.12 rn)
+- Default kernel replaced by the CachyOS LTS kernel (for the coolness factor)
 - Evolution added for Gnome-Shell support
 - nm-connection-editor added
 - Some branding changes (for fun)

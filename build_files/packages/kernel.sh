@@ -1,8 +1,16 @@
 #!/usr/bin/bash
 set -eoux pipefail
 
+dnf5 copr enable -y bieszczaders/kernel-cachyos-addons
+
+# Adds required package for the scheduler
+dnf5 install -y \
+    --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos-addons" \
+    --allowerasing \
+    libcap-ng libcap-ng-devel bore-sysctl cachyos-ksm-settings procps-ng procps-ng-devel uksmd libbpf scx-scheds scx-tools scx-manager cachyos-settings
+
 # Adds the longterm kernel repo
-dnf5 copr enable -y kwizart/kernel-longterm-6.12
+dnf5 copr enable -y bieszczaders/kernel-cachyos
 
 # Remove useless kernels
 readarray -t OLD_KERNELS < <(rpm -qa 'kernel-*')
@@ -15,12 +23,16 @@ fi
 
 # Install kernel packages (noscripts required for 43+)
 dnf5 install -y \
-    --enablerepo="copr:copr.fedorainfracloud.org:kwizart:kernel-longterm-6.12" \
+    --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos" \
     --allowerasing \
     --setopt=tsflags=noscripts \
-    kernel-longterm kernel-longterm-devel kernel-longterm-core kernel-longterm-modules kernel-longterm-modules-extra
+    kernel-cachyos-lts \
+    kernel-cachyos-lts-devel-matched \
+    kernel-cachyos-lts-devel \
+    kernel-cachyos-lts-modules \
+    kernel-cachyos-lts-core
 
-KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-longterm)"
+KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-cachyos-lts)"
 
 # Depmod (required for fedora 43+)
 depmod -a "${KERNEL_VERSION}"
@@ -33,7 +45,9 @@ if [[ -f "${VMLINUZ_SOURCE}" ]]; then
 fi
 
 # Lock kernel packages
-dnf5 versionlock add "kernel-longterm-${KERNEL_VERSION}" || true
+dnf5 versionlock add "kernel-cachyos-lts-${KERNEL_VERSION}" || true
+dnf5 versionlock add "kernel-cachyos-lts-modules-${KERNEL_VERSION}" || true
+
 
 # Thank you @renner03 for this part
 export DRACUT_NO_XATTR=1
