@@ -9,3 +9,4 @@ extra=(
 )
 
 dnf5 install -y ${extra[@]}
+dnf5 remove -y input-remapper 
