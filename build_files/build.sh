@@ -7,4 +7,5 @@ dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:packages install \
   libvirt \
   libvirt-nss \
   virt-install \
+  edk2-ovmf \
   ublue-os-libvirt-workarounds
