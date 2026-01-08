@@ -2,7 +2,8 @@
 
 set -ouex pipefail
 
-dnf5 install -y --skip-unavailable \
+dnf -y copr enable ublue-os/packages
+dnf5 install -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:packages --skip-unavailable \
     edk2-ovmf \
     genisoimage \
     libvirt \
@@ -17,4 +18,5 @@ dnf5 install -y --skip-unavailable \
     qemu-system-x86-core \
     qemu-user-binfmt \
     qemu-user-static \
-    qemu
+    qemu \
+    ublue-os-libvirt-workarounds
