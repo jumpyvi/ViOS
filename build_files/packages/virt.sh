@@ -5,7 +5,7 @@ set -ouex pipefail
 dnf -y copr enable ublue-os/packages
 dnf5 install -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:packages --skip-unavailable \
     libvirt \
-    ublue-os-libvirt-workarounds
+    ublue-os-libvirt-workarounds \
     edk2-ovmf \
     genisoimage \
     libvirt-nss \
