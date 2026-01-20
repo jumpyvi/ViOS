@@ -1,19 +1,11 @@
 #!/usr/bin/bash
 set -eoux pipefail
 
-dnf5 copr enable -y bieszczaders/kernel-cachyos-addons
+# Adds the kwizart longterm 6.12 kernel repo
+dnf5 copr enable -y kwizart/kernel-longterm-6.12
 
-# Adds required package for the scheduler
-dnf5 install -y \
-    --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos-addons" \
-    --allowerasing \
-    libcap-ng libcap-ng-devel bore-sysctl cachyos-ksm-settings procps-ng procps-ng-devel uksmd libbpf scx-scheds scx-tools scx-manager cachyos-settings
-
-# Adds the longterm kernel repo
-dnf5 copr enable -y bieszczaders/kernel-cachyos
-
-# Remove useless kernels
-readarray -t OLD_KERNELS < <(rpm -qa 'kernel-*')
+# Remove existing kernels to prevent conflicts in the DB
+readarray -t OLD_KERNELS < <(rpm -qa 'kernel-*' | grep -v 'kernel-longterm')
 if (( ${#OLD_KERNELS[@]} )); then
     rpm -e --justdb --nodeps "${OLD_KERNELS[@]}"
     dnf5 versionlock delete "${OLD_KERNELS[@]}" || true
@@ -21,35 +13,37 @@ if (( ${#OLD_KERNELS[@]} )); then
     rm -rf /lib/modules/*
 fi
 
-# Install kernel packages (noscripts required for 43+)
+# Install kwizart kernel packages using the specific "longterm" naming convention
 dnf5 install -y \
-    --enablerepo="copr:copr.fedorainfracloud.org:bieszczaders:kernel-cachyos" \
+    --enablerepo="copr:copr.fedorainfracloud.org:kwizart:kernel-longterm-6.12" \
     --allowerasing \
     --setopt=tsflags=noscripts \
-    kernel-cachyos-lts \
-    kernel-cachyos-lts-devel-matched \
-    kernel-cachyos-lts-devel \
-    kernel-cachyos-lts-modules \
-    kernel-cachyos-lts-core
+    kernel-longterm \
+    kernel-longterm-core \
+    kernel-longterm-modules \
+    kernel-longterm-modules-extra \
+    kernel-longterm-devel
 
-KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-cachyos-lts)"
+# Extract the version from the specific longterm package
+KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-longterm-core | head -n 1)"
 
-# Depmod (required for fedora 43+)
+# Generate module dependencies (required for Fedora 43+ / noscripts installs)
 depmod -a "${KERNEL_VERSION}"
 
-# Copy vmlinuz
-VMLINUZ_SOURCE="/usr/lib/kernel/vmlinuz-${KERNEL_VERSION}"
+# Copy vmlinuz to the modules directory for the bootloader to find
+VMLINUZ_SOURCE="/lib/modules/${KERNEL_VERSION}/vmlinuz"
 VMLINUZ_TARGET="/usr/lib/modules/${KERNEL_VERSION}/vmlinuz"
+
 if [[ -f "${VMLINUZ_SOURCE}" ]]; then
+    mkdir -p "/usr/lib/modules/${KERNEL_VERSION}"
     cp "${VMLINUZ_SOURCE}" "${VMLINUZ_TARGET}"
 fi
 
-# Lock kernel packages
-dnf5 versionlock add "kernel-cachyos-lts-${KERNEL_VERSION}" || true
-dnf5 versionlock add "kernel-cachyos-lts-modules-${KERNEL_VERSION}" || true
+# Lock kernel packages to prevent accidental updates to a different major version
+dnf5 versionlock add "kernel-longterm-${KERNEL_VERSION}" || true
+dnf5 versionlock add "kernel-longterm-core-${KERNEL_VERSION}" || true
 
-
-# Thank you @renner03 for this part
+# Initramfs generation using dracut
 export DRACUT_NO_XATTR=1
 dracut --force \
   --no-hostonly \
@@ -58,4 +52,4 @@ dracut --force \
   --reproducible -v --add ostree \
   -f "/usr/lib/modules/${KERNEL_VERSION}/initramfs.img"
 
-chmod 0600 "/lib/modules/${KERNEL_VERSION}/initramfs.img"
+chmod 0600 "/usr/lib/modules/${KERNEL_VERSION}/initramfs.img"
