@@ -4,7 +4,7 @@ set -eoux pipefail
 # Adds the kwizart longterm 6.12 kernel repo
 dnf5 copr enable -y kwizart/kernel-longterm-6.12
 
-# Remove existing kernels to prevent conflicts in the DB
+# Remove existing kernels to prevent conflicts
 readarray -t OLD_KERNELS < <(rpm -qa 'kernel-*' | grep -v 'kernel-longterm')
 if (( ${#OLD_KERNELS[@]} )); then
     rpm -e --justdb --nodeps "${OLD_KERNELS[@]}"
@@ -13,7 +13,7 @@ if (( ${#OLD_KERNELS[@]} )); then
     rm -rf /lib/modules/*
 fi
 
-# Install kwizart kernel packages using the specific "longterm" naming convention
+# Install kwizart kernel packages
 dnf5 install -y \
     --enablerepo="copr:copr.fedorainfracloud.org:kwizart:kernel-longterm-6.12" \
     --allowerasing \
@@ -24,26 +24,31 @@ dnf5 install -y \
     kernel-longterm-modules-extra \
     kernel-longterm-devel
 
-# Extract the version from the specific longterm package
+# Extract the version
 KERNEL_VERSION="$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' kernel-longterm-core | head -n 1)"
 
-# Generate module dependencies (required for Fedora 43+ / noscripts installs)
+# Generate module dependencies
 depmod -a "${KERNEL_VERSION}"
 
-# Copy vmlinuz to the modules directory for the bootloader to find
+# Handle vmlinuz placement
+# We check if the files are physically different (-ef) before attempting a copy
 VMLINUZ_SOURCE="/lib/modules/${KERNEL_VERSION}/vmlinuz"
 VMLINUZ_TARGET="/usr/lib/modules/${KERNEL_VERSION}/vmlinuz"
 
 if [[ -f "${VMLINUZ_SOURCE}" ]]; then
-    mkdir -p "/usr/lib/modules/${KERNEL_VERSION}"
-    cp "${VMLINUZ_SOURCE}" "${VMLINUZ_TARGET}"
+    if ! [[ "${VMLINUZ_SOURCE}" -ef "${VMLINUZ_TARGET}" ]]; then
+        mkdir -p "/usr/lib/modules/${KERNEL_VERSION}"
+        cp "${VMLINUZ_SOURCE}" "${VMLINUZ_TARGET}"
+    else
+        echo "vmlinuz already exists at target via symlink, skipping copy."
+    fi
 fi
 
-# Lock kernel packages to prevent accidental updates to a different major version
+# Lock kernel packages
 dnf5 versionlock add "kernel-longterm-${KERNEL_VERSION}" || true
 dnf5 versionlock add "kernel-longterm-core-${KERNEL_VERSION}" || true
 
-# Initramfs generation using dracut
+# Initramfs generation
 export DRACUT_NO_XATTR=1
 dracut --force \
   --no-hostonly \
