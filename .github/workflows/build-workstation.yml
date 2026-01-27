@@ -107,7 +107,6 @@ jobs:
           oci: false
           build-args: |
             BASE_IMAGE=${{ steps.get_base_image.outputs.BASE_IMAGE }}
-            TYPE=workstation
 
       # These `if` statements are so that pull requests for your custom images do not make it publish any packages under your name without you knowing
       # They also check if the runner is on the default branch so that things like the merge queue (if you enable it), are going to work
