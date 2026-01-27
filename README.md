@@ -1,23 +1,20 @@
-# ViOS
+# JumpyFin
 
 # Purpose
 
-This repository contain all my UBlue custom images.
-I try to keep the "atomic philosophy" and only add what can absolutly not be installed without root write acces
+Bluefin with virt/docker support and an LTS kernel
 
 
 ## Workstation
-> ghcr.io/jumpyvi/vios-workstation
 
 ☁️ Based on Bluefin (stable)
 
 A slight modification to the base image matching my preference and requirements
 
 ### Changes:
-- Default kernel replaced by the CachyOS LTS kernel (for the coolness factor)
-- Evolution added for Gnome-Shell support
+- Default kernel replaced by Kwizart's LTS kernel
 - Full virtualization added
-- nm-connection-editor added
+- Full docker-ce added
 - Some branding changes (for fun)
 
 
@@ -25,5 +22,5 @@ A slight modification to the base image matching my preference and requirements
 # How to rebase
 
 ```bash
-sudo bootc switch --enforce-container-sigpolicy "ghcr.io/jumpyvi/vios-workstation:latest"
+sudo bootc switch --enforce-container-sigpolicy "ghcr.io/jumpyvi/jumpyfin:latest"
 ```
