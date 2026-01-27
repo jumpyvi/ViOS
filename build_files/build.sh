@@ -8,8 +8,7 @@ edition="$1"
 if [[ "$edition" == "workstation" ]]; then
     /ctx/branding/branding.sh
     /ctx/packages/kernel.sh
-    /ctx/packages/virt.sh
-    /ctx/packages/bluefin-tweaks.sh
+    /ctx/packages/dx.sh
 
 else
     echo "Invalid edition specified. Please use 'workstation' or 'multimedia'."
