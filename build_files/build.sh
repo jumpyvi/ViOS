@@ -7,3 +7,5 @@ set -ouex pipefail
 /ctx/packages/dx.sh
 
 
+echo test
+
