@@ -2,8 +2,10 @@
 
 set -ouex pipefail
 
-/ctx/branding/branding.sh
+# /ctx/branding/branding.sh
+
 /ctx/packages/kernel.sh
 /ctx/packages/dx.sh
+/ctx/packages/tweaks.sh
 
 
