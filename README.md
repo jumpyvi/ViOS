@@ -1,13 +1,13 @@
-# JumpyFin
+# BootVi
 
 # Purpose
 
-Bluefin with virt/docker support and an LTS kernel
+Zirconium with virt/docker support and an LTS kernel
 
 
 ## Workstation
 
-☁️ Based on Bluefin (stable)
+☁️ Based on zirconium
 
 A slight modification to the base image matching my preference and requirements
 
@@ -15,12 +15,12 @@ A slight modification to the base image matching my preference and requirements
 - Default kernel replaced by Kwizart's LTS kernel
 - Full virtualization added
 - Full docker-ce added
-- Some branding changes (for fun)
-
+- Ghostty instead of foot
+- NmConnectionEditor for advanced network management
 
 
 # How to rebase
 
 ```bash
-sudo bootc switch --enforce-container-sigpolicy "ghcr.io/jumpyvi/jumpyfin:latest"
+sudo bootc switch --enforce-container-sigpolicy "ghcr.io/jumpyvi/bootvi:latest"
 ```
