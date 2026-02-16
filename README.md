@@ -15,7 +15,7 @@ A slight modification to the base image matching my preference and requirements
 - Default kernel replaced by Kwizart's LTS kernel
 - Full virtualization added
 - Full docker-ce added
-- Ghostty instead of foot
+- Ptyxis instead of foot
 - NmConnectionEditor for advanced network management
 
 
