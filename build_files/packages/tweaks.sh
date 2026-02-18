@@ -8,4 +8,5 @@ dnf5 install -y \
     vim
 
 dnf5 remove foot -y
-    
+
+rm /usr/share/nautilus-python/extensions/xdg-terminal-exec-nautilus.py
